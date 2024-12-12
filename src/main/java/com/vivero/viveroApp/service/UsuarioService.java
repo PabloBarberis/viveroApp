@@ -1,6 +1,5 @@
 package com.vivero.viveroApp.service;
 
-
 import com.vivero.viveroApp.model.Usuario;
 import com.vivero.viveroApp.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +32,9 @@ public class UsuarioService {
     public void deleteUsuarioById(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    public boolean existsById(Long id) {
+        return usuarioRepository.existsById(id);
+    }
+
 }

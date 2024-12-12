@@ -1,7 +1,9 @@
 package com.vivero.viveroApp.service;
-
 import com.vivero.viveroApp.model.Adelanto;
+import com.vivero.viveroApp.model.Usuario;
 import com.vivero.viveroApp.repository.AdelantoRepository;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,26 +13,33 @@ import java.util.Optional;
 @Service
 public class AdelantoService {
 
-    @Autowired
-    private AdelantoRepository adelantoRepository;
+    private final AdelantoRepository adelantoRepository;
 
-    // Obtener todos los adelantos
-    public List<Adelanto> getAllAdelantos() {
-        return adelantoRepository.findAll();
+    @Autowired
+    public AdelantoService(AdelantoRepository adelantoRepository) {
+        this.adelantoRepository = adelantoRepository;
     }
 
-    // Guardar un adelanto
+    public List<Adelanto> getAdelantosByUsuarioAndMesAndAño(Usuario usuario, int mes, int año) {
+        LocalDate startDate = LocalDate.of(año, mes, 1);
+        LocalDate endDate = YearMonth.of(año, mes).atEndOfMonth();
+        return adelantoRepository.findByUsuarioAndFechaBetween(usuario, startDate, endDate);
+    }
+
     public Adelanto saveAdelanto(Adelanto adelanto) {
         return adelantoRepository.save(adelanto);
     }
 
-    // Obtener un adelanto por ID
-    public Optional<Adelanto> getAdelantoById(Long id) {
-        return adelantoRepository.findById(id);
-    }
-
-    // Eliminar un adelanto por ID
     public void deleteAdelanto(Long id) {
         adelantoRepository.deleteById(id);
     }
+
+    public Optional<Adelanto> findById(Long id) {
+        return adelantoRepository.findById(id);
+    }
+
+    public boolean existsById(Long id) {
+        return adelantoRepository.existsById(id);
+    }
+
 }

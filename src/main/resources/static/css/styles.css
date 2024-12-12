@@ -223,3 +223,40 @@ label.form-check-label:focus,
 .form-inline-item button {
     margin-right: 10px;
 }
+
+.modal-body label {
+    color: #000; /* Negro para un buen contraste */
+}
+
+.modal-content {
+    background-color: #fff; /* Asegurarse de que el fondo sea blanco */
+}
+
+.modal-header, .modal-footer {
+    background-color: #f1f1f1; /* Fondo gris claro para contraste */
+    border: none;
+}
+
+.modal-title {
+    color: #333; /* Texto del título del modal */
+}
+
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+                display: none;
+                -webkit-appearance: none;
+            }
+            input[type="time"] {
+                width: 80px;
+                text-align: center;
+            }
+            input[type="number"]::-webkit-outer-spin-button,
+            input[type="number"]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            input[type="number"] {
+                -moz-appearance: textfield;
+                width: 100px;
+                text-align: center;
+            }
