@@ -1,0 +1,33 @@
+package com.vivero.viveroApp.model.enums;
+
+public enum ModeloMaceta {
+    BERTA,
+    BINA,
+    BOLS,
+    CARINA,
+    COMUN,
+    CONCA,
+    CONICA,
+    COPA,
+    CUBOS,
+    CULTIVO,
+    DENISE,
+    DENISE_PARED,
+    ECONOMICA,
+    FINNY,
+    IVANA,
+    IVANA_CON_ARO,
+    IVANA_OWEN,
+    JOSEPHINE,
+    LILIANA,
+    MAURO,
+    NUEVA_MAURO,
+    OWEN,
+    OWEN_REDONDA,
+    PAULA,
+    PIRAMIDAL,
+    TAHIA,
+    TOSCANA,
+    TULIPAN,
+    VALERIA
+}
