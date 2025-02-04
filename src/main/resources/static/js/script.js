@@ -185,10 +185,15 @@ function guardar(dia, id) {
         total *= 2;
     }
 
+    // Obtén el token CSRF y el encabezado del HTML
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
     fetch('/horas/guardar', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            [csrfHeader]: csrfToken // Agregar token CSRF
         },
         body: new URLSearchParams({
             id: id !== null ? id : '', // Pasar el ID si existe
@@ -292,56 +297,66 @@ function agregarGasto() {
         concepto: conceptoGasto
     };
 
+    // Obtén el token CSRF y el encabezado del HTML
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
     fetch('/gastos/guardar', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken // Incluye el token CSRF
         },
         body: JSON.stringify(gasto)
     })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Gasto agregado correctamente.');
-                    cargarGastos();
-                    obtenerTotales();
-                } else {
-                    alert('Error al agregar el gasto.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al agregar el gasto.');
-            });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Gasto agregado correctamente.');
+            cargarGastos();
+            obtenerTotales();
+        } else {
+            alert('Error al agregar el gasto.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al agregar el gasto.');
+    });
 }
+
 
 
 function editarGasto(id) {
     console.log('ENTRANDO A EDITAR GASTO');
     fetch(`/gastos/${id}`)
-            .then(response => response.json())
-            .then(gasto => {
-                if (gasto) {
-                    document.getElementById('editarGastoId').value = gasto.id;
-                    document.getElementById('editarFechaGasto').value = gasto.fecha;
-                    document.getElementById('editarCantidadGasto').value = gasto.cantidad;
-                    document.getElementById('editarConceptoGasto').value = gasto.concepto;
-                    $('#editarGastoModal').modal('show');
-                } else {
-                    alert('Gasto no encontrado.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al cargar el gasto para editar.');
-            });
+        .then(response => response.json())
+        .then(gasto => {
+            if (gasto) {
+                document.getElementById('editarGastoId').value = gasto.id;
+                document.getElementById('editarFechaGasto').value = gasto.fecha;
+                document.getElementById('editarCantidadGasto').value = gasto.cantidad;
+                document.getElementById('editarConceptoGasto').value = gasto.concepto;
+                $('#editarGastoModal').modal('show');
+            } else {
+                alert('Gasto no encontrado.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al cargar el gasto para editar.');
+        });
 }
+
 function guardarGastoEditado() {
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
     var id = document.getElementById('editarGastoId').value;
     var fecha = document.getElementById('editarFechaGasto').value;
     var cantidad = parseFloat(document.getElementById('editarCantidadGasto').value);
@@ -357,69 +372,75 @@ function guardarGastoEditado() {
         fecha: fecha,
         cantidad: cantidad,
         concepto: concepto,
-        usuario: {id: document.getElementById('usuario').value} // Asegúrate de incluir el usuario
+        usuario: {id: document.getElementById('usuario').value}
     };
 
     fetch('/gastos/editar', {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
         },
         body: JSON.stringify(gasto)
     })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Gasto editado correctamente.');
-                    $('#editarGastoModal').modal('hide');
-                    cargarGastos(); // Llama a cargarGastos para actualizar la tabla
-                    obtenerTotales();
-                } else {
-                    alert('Error al editar el gasto.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al editar el gasto.');
-            });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Gasto editado correctamente.');
+            $('#editarGastoModal').modal('hide');
+            cargarGastos();
+            obtenerTotales();
+        } else {
+            alert('Error al editar el gasto.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al editar el gasto.');
+    });
 }
-
-
-
 function eliminarGasto(id) {
     console.log('ENTRANDO A ELIMINAR GASTO');
+
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
     fetch(`/gastos/eliminar?id=${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            [csrfHeader]: csrfToken
+        }
     })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Gasto eliminado correctamente.');
-                    cargarGastos();
-                    obtenerTotales();
-                } else {
-                    alert('Error al eliminar el gasto.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al eliminar el gasto.');
-            });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Gasto eliminado correctamente.');
+            cargarGastos();
+            obtenerTotales();
+        } else {
+            alert('Error al eliminar el gasto.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al eliminar el gasto.');
+    });
 }
 
 
 function agregarAdelanto() {
     console.log('ENTRANDO A AGREGAR ADELANTO');
+
     var usuarioId = document.getElementById('usuario').value;
     var fechaAdelanto = document.getElementById('fechaAdelanto').value;
     var cantidadAdelanto = parseFloat(document.getElementById('cantidadAdelanto').value);
@@ -430,38 +451,44 @@ function agregarAdelanto() {
     }
 
     var adelanto = {
-        usuario: {id: usuarioId},
+        usuario: { id: usuarioId },
         fecha: fechaAdelanto,
         cantidad: cantidadAdelanto
     };
 
+    // Obtén el token CSRF y el encabezado desde las metaetiquetas
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
     fetch('/adelantos/guardar', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken // Agrega el token CSRF en el encabezado
         },
         body: JSON.stringify(adelanto)
     })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Adelanto agregado correctamente.');
-                    cargarAdelantos();
-                    obtenerTotales();
-                } else {
-                    alert('Error al agregar el adelanto.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al agregar el adelanto.');
-            });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Adelanto agregado correctamente.');
+            cargarAdelantos();
+            obtenerTotales();
+        } else {
+            alert('Error al agregar el adelanto.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al agregar el adelanto.');
+    });
 }
+
 
 
 
@@ -512,7 +539,6 @@ function cargarAdelantosParaUsuario(usuarioId, mes, año) {
             });
 }
 
-
 function editarAdelanto(id) {
     console.log('ENTRANDO A EDITAR ADELANTO');
     fetch(`/adelantos/${id}`)
@@ -533,10 +559,10 @@ function editarAdelanto(id) {
         });
 }
 
-
-
-
 function guardarAdelantoEditado() {
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
     var id = document.getElementById('editarAdelantoId').value;
     var fecha = document.getElementById('editarFechaAdelanto').value;
     var cantidad = parseFloat(document.getElementById('editarCantidadAdelanto').value);
@@ -556,7 +582,8 @@ function guardarAdelantoEditado() {
     fetch('/adelantos/editar', {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
         },
         body: JSON.stringify(adelanto)
     })
@@ -570,8 +597,8 @@ function guardarAdelantoEditado() {
         if (data.success) {
             alert('Adelanto editado correctamente.');
             $('#editarAdelantoModal').modal('hide');
-            cargarAdelantos(); // Llama a cargarAdelantos para actualizar la tabla
-            obtenerTotales(); // Actualiza los totales
+            cargarAdelantos();
+            obtenerTotales();
         } else {
             alert('Error al editar el adelanto.');
         }
@@ -581,34 +608,37 @@ function guardarAdelantoEditado() {
         alert('Error al editar el adelanto.');
     });
 }
-
-
-
-
 function eliminarAdelanto(id) {
     console.log('ENTRANDO A ELIMINAR ADELANTO');
+    
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
     fetch(`/adelantos/eliminar/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            [csrfHeader]: csrfToken
+        }
     })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Adelanto eliminado correctamente.');
-                    cargarAdelantos();
-                    obtenerTotales();
-                } else {
-                    alert('Error al eliminar el adelanto.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al eliminar el adelanto.');
-            });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Adelanto eliminado correctamente.');
+            cargarAdelantos();
+            obtenerTotales();
+        } else {
+            alert('Error al eliminar el adelanto.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al eliminar el adelanto.');
+    });
 }
 
 

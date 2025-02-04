@@ -243,20 +243,79 @@ label.form-check-label:focus,
 
 
 input[type="time"]::-webkit-calendar-picker-indicator {
-                display: none;
-                -webkit-appearance: none;
-            }
-            input[type="time"] {
-                width: 80px;
-                text-align: center;
-            }
-            input[type="number"]::-webkit-outer-spin-button,
-            input[type="number"]::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
-            input[type="number"] {
-                -moz-appearance: textfield;
-                width: 100px;
-                text-align: center;
-            }
+    display: none;
+    -webkit-appearance: none;
+}
+input[type="time"] {
+    width: 80px;
+    text-align: center;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+    width: 100px;
+    text-align: center;
+}
+/* Estilo del recuadro de inicio de sesión */
+.login-card {
+    background-color: #000000; /* Fondo negro */
+    border: 2px solid #16d016; /* Borde verde */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Títulos y etiquetas */
+.text-success {
+    color: #16d016 !important; /* Verde */
+}
+
+/* Estilo para los campos de entrada */
+.login-card .form-control {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #16d016; /* Texto verde */
+    border: 2px solid #16d016; /* Borde verde */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Placeholder en color verde */
+.login-card .form-control::placeholder {
+    color: #16d016;
+    opacity: 0.8;
+}
+
+/* Estilo del botón */
+.btn-success {
+    background-color: #16d016 !important; /* Fondo verde */
+    color: #000000 !important; /* Texto negro */
+    border: 2px solid #16d016 !important; /* Borde verde */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: transform 0.2s ease;
+}
+
+/* Efecto hover en el botón */
+.btn-success:hover {
+    transform: scale(1.05); /* Efecto de aumento */
+    background-color: #13b113 !important; /* Verde más oscuro */
+}
+
+/* Aumentar el espaciado entre los campos */
+.form-group {
+    margin-bottom: 20px;
+}
+
+
+    /* Establecer un tamaño fijo para el carrusel */
+    .carousel-inner {
+        width: 100%;
+        height: 700px; /* Ajusta esta altura según tus necesidades */
+        overflow: hidden;
+    }
+
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+    }

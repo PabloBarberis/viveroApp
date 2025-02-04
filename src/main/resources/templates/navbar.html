@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Navbar Fragment</title>
+
+        <!-- Enlace de CSS para Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Fuente Poppins desde Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+        <style>
+            /* Establecer la fuente para la navbar */
+            body {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            /* Hacer que todos los elementos de la navbar estén en mayúsculas */
+            .navbar-nav .nav-link {
+                text-transform: uppercase;
+            }
+
+            /* Cambiar el estilo del dropdown */
+            .navbar .dropdown-menu {
+                background-color: black !important;  /* Fondo negro */
+                border-color: black !important;  /* Borde negro */
+            }
+
+            .navbar .dropdown-item {
+                color: green !important;  /* Letras verdes */
+            }
+
+            .navbar .dropdown-item:hover {
+                background-color: darkgreen !important;  /* Color de fondo al pasar el mouse */
+                color: white !important;  /* Letras blancas al pasar el mouse */
+            }
+
+            /* Cambiar el color de los enlaces de la navbar */
+            .navbar-nav .nav-link {
+                color: white !important;  /* Letras blancas en la barra de navegación */
+            }
+
+            .navbar-nav .nav-link:hover {
+                color: green !important;  /* Letras verdes al pasar el mouse */
+            }
+        </style>
+    </head>
+    <body>
+        <div th:fragment="navbar">
+            <!-- Barra de navegación -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="/">Vivero Vive Verde</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/fotos">Fotos</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="productosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
+                            <ul class="dropdown-menu" aria-labelledby="productosDropdown">
+                                <li><a class="dropdown-item" href="/plantasvivero">Plantas</a></li>
+                                <li><a class="dropdown-item" href="/macetasvivero">Macetas</a></li>
+                                <li><a class="dropdown-item" href="/decoracionvivero">Decoración</a></li>
+                                <li><a class="dropdown-item" href="/growshopvivero">Growshop</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/contactovivero">Contacto</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Scripts para Bootstrap y Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

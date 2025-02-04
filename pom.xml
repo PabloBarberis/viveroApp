@@ -34,7 +34,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.32</version> <!-- Asegúrate de usar la versión adecuada -->
+            <version>8.0.33</version> <!-- Asegúrate de usar la versión adecuada -->
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -57,8 +57,8 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.persistence</groupId>
@@ -72,6 +72,12 @@
             <version>2.2</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>

@@ -1,102 +1,105 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Venta</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Detalle de Venta</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/styles.css">
 
-</head>
+    </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-        <a class="navbar-brand" href="#">Vive Verde</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/ventas/listar">Ventas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/plantas/listar">Plantas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/decoracion/listar">Decoración</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/grow/listar">Grow</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/tierra/listar">Tierra</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/maceta/listar">Macetas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/proveedores/listar">Proveedores</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/clientes/listar">Clientes</a>
-                </li>
-            </ul>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+            <a class="navbar-brand" href="/admin/dashboard">Vive Verde</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ventas/listar">Ventas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/plantas/listar">Plantas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/decoracion/listar">Decoración</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/grow/listar">Grow</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tierra/listar">Tierra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/maceta/listar">Macetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/proveedores/listar">Proveedores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clientes/listar">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/horas">Horas</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mb-3">
+                <a href="/ventas/listar" class="btn btn-light">Retroceder</a>
+            </div>
+        </nav>
+        <div class="container mt-5">
+
+            <h1>Detalle de Venta</h1>
+
+
+            <table class="table table-bordered table-bordered-green">
+                <tr>
+                    <th>ID</th>
+                    <td th:text="${venta.id}"></td>
+                </tr>
+                <tr>
+                    <th>Cliente</th>
+                    <td th:text="${venta.cliente != null ? venta.cliente.nombre : 'N/A'}"></td>
+                </tr>
+                <tr>
+                    <th>Fecha</th>
+                    <td th:text="${#dates.format(venta.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+                </tr>
+                <tr>
+                    <th>Método de Pago</th>
+                    <td th:text="${venta.metodoPago}"></td>
+                </tr>
+                <tr>
+                    <th>Descuento</th>
+                    <td th:text="${venta.descuento != null ? venta.descuento.porcentaje + '%' : 'N/A'}"></td>
+                </tr>
+                <tr>
+                    <th>Productos</th>
+                    <td>
+                        <ul>
+                            <li th:each="vp : ${venta.productos}">
+                                <span
+                                    th:text="${vp.producto.nombre} + ' x ' + ${vp.cantidad} + ' $' + ${vp.cantidad * vp.producto.precio} + ' ($' + ${vp.producto.precio} + ' c/u)'"></span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td th:text="'$' + ${T(java.lang.String).format('%.2f', venta.total)}"></td>
+                </tr>
+            </table>
+
         </div>
-        
-        <div class="mb-3">
-            <a href="/ventas/listar" class="btn btn-light">Retroceder</a>
-        </div>
-    </nav>
-    <div class="container mt-5">
 
-        <h1>Detalle de Venta</h1>
-        
-
-        <table class="table table-bordered table-bordered-green">
-            <tr>
-                <th>ID</th>
-                <td th:text="${venta.id}"></td>
-            </tr>
-            <tr>
-                <th>Cliente</th>
-                <td th:text="${venta.cliente != null ? venta.cliente.nombre : 'N/A'}"></td>
-            </tr>
-            <tr>
-                <th>Fecha</th>
-                <td th:text="${#dates.format(venta.fecha, 'dd/MM/yyyy HH:mm')}"></td>
-            </tr>
-            <tr>
-                <th>Método de Pago</th>
-                <td th:text="${venta.metodoPago}"></td>
-            </tr>
-            <tr>
-                <th>Descuento</th>
-                <td th:text="${venta.descuento != null ? venta.descuento.porcentaje + '%' : 'N/A'}"></td>
-            </tr>
-            <tr>
-                <th>Productos</th>
-                <td>
-                    <ul>
-                        <li th:each="vp : ${venta.productos}">
-                            <span
-                                th:text="${vp.producto.nombre} + ' x ' + ${vp.cantidad} + ' $' + ${vp.cantidad * vp.producto.precio} + ' ($' + ${vp.producto.precio} + ' c/u)'"></span>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th>Total</th>
-                <td th:text="'$' + ${T(java.lang.String).format('%.2f', venta.total)}"></td>
-            </tr>
-        </table>
-        
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
 
 </html>
