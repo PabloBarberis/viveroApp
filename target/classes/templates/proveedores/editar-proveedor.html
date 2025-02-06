@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editar Proveedor</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+                        <a class="navbar-brand" href="/admin/dashboard">Vive Verde</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ventas/listar">Ventas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/plantas/listar">Plantas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/decoracion/listar">Decoración</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/grow/listar">Grow</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tierra/listar">Tierra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/maceta/listar">Macetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/proveedores/listar">Proveedores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clientes/listar">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/horas">Horas</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <div class="container mt-5">
+            <h1>Editar Proveedor</h1>
+            <div class="separator"></div>
+            <form th:action="@{/proveedores/editar/{id}(id=${proveedor.id})}" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="nombre" class="form-title">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" th:value="${proveedor.nombre}"
+                               required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email" class="form-title">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" th:value="${proveedor.email}"
+                               required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="telefono" class="form-title">Teléfono:</label>
+                        <input type="text" id="telefono" name="telefono" class="form-control"
+                               th:value="${proveedor.telefono}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="direccion" class="form-title">Dirección:</label>
+                        <input type="text" id="direccion" name="direccion" class="form-control"
+                               th:value="${proveedor.direccion}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="cuil" class="form-title">Cuil:</label>
+                        <input type="text" id="cuil" name="cuil" class="form-control" th:value="${proveedor.cuil}" required>
+                    </div>
+                </div>
+                <div class="separator"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-success">Aceptar</button>
+                        <a th:href="@{/proveedores/listar}" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Crear Producto Grow</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+            <a class="navbar-brand" href="/admin/dashboard">Vive Verde</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ventas/listar">Ventas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/plantas/listar">Plantas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/decoracion/listar">Decoración</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/grow/listar">Grow</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tierra/listar">Tierra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/maceta/listar">Macetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/proveedores/listar">Proveedores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clientes/listar">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/horas">Horas</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <div class="container mt-5">
+            <h1>Crear Producto Grow</h1>
+            <div class="separator"></div>
+            <form th:action="@{/grow/crear}" th:object="${grow}" method="post">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="nombre" class="form-title">Nombre</label>
+                        <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="marca" class="form-title">Marca</label>
+                        <input type="text" id="marca" th:field="*{marca}" class="form-control" required />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="precio" class="form-title">Precio</label>
+                        <input type="number" id="precio" th:field="*{precio}" class="form-control" step="0.01" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="stock" class="form-title">Stock</label>
+                        <input type="number" id="stock" th:field="*{stock}" class="form-control" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion" class="form-title">Descripción</label>
+                    <textarea id="descripcion" th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+                </div>
+
+                <!-- Campo para seleccionar proveedores con checkboxes -->
+                <div class="form-group">
+                    <label class="seleccionar-proveedores">Seleccionar Proveedores:</label><br />
+                    <div th:each="proveedor : ${proveedores}">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:id="'proveedor-' + ${proveedor.id}" th:value="${proveedor.id}" name="proveedoresIds" />
+                            <label class="form-check-label" th:for="'proveedor-' + ${proveedor.id}" th:text="${proveedor.nombre}"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="separator"></div>
+                <!-- Botones para crear producto y cancelar -->
+                <button type="submit" class="btn btn-success">Aceptar</button>
+                <a th:href="@{/grow/listar}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </body>
+</html>
