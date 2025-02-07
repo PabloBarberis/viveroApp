@@ -209,24 +209,24 @@ function guardar(dia, id) {
             total: total
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Datos guardados correctamente.');
-            obtenerTotales(); // Actualizar los totales
-        } else {
-            alert('Error al guardar los datos.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al guardar los datos.');
-    });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Datos guardados correctamente.');
+                    obtenerTotales(); // Actualizar los totales
+                } else {
+                    alert('Error al guardar los datos.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos.');
+            });
 }
 
 
@@ -309,25 +309,25 @@ function agregarGasto() {
         },
         body: JSON.stringify(gasto)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Gasto agregado correctamente.');
-            cargarGastos();
-            obtenerTotales();
-        } else {
-            alert('Error al agregar el gasto.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al agregar el gasto.');
-    });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Gasto agregado correctamente.');
+                    cargarGastos();
+                    obtenerTotales();
+                } else {
+                    alert('Error al agregar el gasto.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al agregar el gasto.');
+            });
 }
 
 
@@ -335,22 +335,22 @@ function agregarGasto() {
 function editarGasto(id) {
     console.log('ENTRANDO A EDITAR GASTO');
     fetch(`/gastos/${id}`)
-        .then(response => response.json())
-        .then(gasto => {
-            if (gasto) {
-                document.getElementById('editarGastoId').value = gasto.id;
-                document.getElementById('editarFechaGasto').value = gasto.fecha;
-                document.getElementById('editarCantidadGasto').value = gasto.cantidad;
-                document.getElementById('editarConceptoGasto').value = gasto.concepto;
-                $('#editarGastoModal').modal('show');
-            } else {
-                alert('Gasto no encontrado.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al cargar el gasto para editar.');
-        });
+            .then(response => response.json())
+            .then(gasto => {
+                if (gasto) {
+                    document.getElementById('editarGastoId').value = gasto.id;
+                    document.getElementById('editarFechaGasto').value = gasto.fecha;
+                    document.getElementById('editarCantidadGasto').value = gasto.cantidad;
+                    document.getElementById('editarConceptoGasto').value = gasto.concepto;
+                    $('#editarGastoModal').modal('show');
+                } else {
+                    alert('Gasto no encontrado.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al cargar el gasto para editar.');
+            });
 }
 
 function guardarGastoEditado() {
@@ -383,26 +383,26 @@ function guardarGastoEditado() {
         },
         body: JSON.stringify(gasto)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Gasto editado correctamente.');
-            $('#editarGastoModal').modal('hide');
-            cargarGastos();
-            obtenerTotales();
-        } else {
-            alert('Error al editar el gasto.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al editar el gasto.');
-    });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Gasto editado correctamente.');
+                    $('#editarGastoModal').modal('hide');
+                    cargarGastos();
+                    obtenerTotales();
+                } else {
+                    alert('Error al editar el gasto.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al editar el gasto.');
+            });
 }
 function eliminarGasto(id) {
     console.log('ENTRANDO A ELIMINAR GASTO');
@@ -416,25 +416,25 @@ function eliminarGasto(id) {
             [csrfHeader]: csrfToken
         }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Gasto eliminado correctamente.');
-            cargarGastos();
-            obtenerTotales();
-        } else {
-            alert('Error al eliminar el gasto.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al eliminar el gasto.');
-    });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Gasto eliminado correctamente.');
+                    cargarGastos();
+                    obtenerTotales();
+                } else {
+                    alert('Error al eliminar el gasto.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar el gasto.');
+            });
 }
 
 
@@ -451,7 +451,7 @@ function agregarAdelanto() {
     }
 
     var adelanto = {
-        usuario: { id: usuarioId },
+        usuario: {id: usuarioId},
         fecha: fechaAdelanto,
         cantidad: cantidadAdelanto
     };
@@ -468,25 +468,25 @@ function agregarAdelanto() {
         },
         body: JSON.stringify(adelanto)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Adelanto agregado correctamente.');
-            cargarAdelantos();
-            obtenerTotales();
-        } else {
-            alert('Error al agregar el adelanto.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al agregar el adelanto.');
-    });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Adelanto agregado correctamente.');
+                    cargarAdelantos();
+                    obtenerTotales();
+                } else {
+                    alert('Error al agregar el adelanto.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al agregar el adelanto.');
+            });
 }
 
 
@@ -542,21 +542,21 @@ function cargarAdelantosParaUsuario(usuarioId, mes, año) {
 function editarAdelanto(id) {
     console.log('ENTRANDO A EDITAR ADELANTO');
     fetch(`/adelantos/${id}`)
-        .then(response => response.json())
-        .then(adelanto => {
-            if (adelanto) {
-                document.getElementById('editarAdelantoId').value = adelanto.id;
-                document.getElementById('editarFechaAdelanto').value = adelanto.fecha;
-                document.getElementById('editarCantidadAdelanto').value = adelanto.cantidad;
-                $('#editarAdelantoModal').modal('show');
-            } else {
-                alert('Adelanto no encontrado.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al cargar el adelanto para editar.');
-        });
+            .then(response => response.json())
+            .then(adelanto => {
+                if (adelanto) {
+                    document.getElementById('editarAdelantoId').value = adelanto.id;
+                    document.getElementById('editarFechaAdelanto').value = adelanto.fecha;
+                    document.getElementById('editarCantidadAdelanto').value = adelanto.cantidad;
+                    $('#editarAdelantoModal').modal('show');
+                } else {
+                    alert('Adelanto no encontrado.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al cargar el adelanto para editar.');
+            });
 }
 
 function guardarAdelantoEditado() {
@@ -576,7 +576,7 @@ function guardarAdelantoEditado() {
         id: id,
         fecha: fecha,
         cantidad: cantidad,
-        usuario: { id: document.getElementById('usuario').value }
+        usuario: {id: document.getElementById('usuario').value}
     };
 
     fetch('/adelantos/editar', {
@@ -587,30 +587,30 @@ function guardarAdelantoEditado() {
         },
         body: JSON.stringify(adelanto)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Adelanto editado correctamente.');
-            $('#editarAdelantoModal').modal('hide');
-            cargarAdelantos();
-            obtenerTotales();
-        } else {
-            alert('Error al editar el adelanto.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al editar el adelanto.');
-    });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Adelanto editado correctamente.');
+                    $('#editarAdelantoModal').modal('hide');
+                    cargarAdelantos();
+                    obtenerTotales();
+                } else {
+                    alert('Error al editar el adelanto.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al editar el adelanto.');
+            });
 }
 function eliminarAdelanto(id) {
     console.log('ENTRANDO A ELIMINAR ADELANTO');
-    
+
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
 
@@ -620,25 +620,25 @@ function eliminarAdelanto(id) {
             [csrfHeader]: csrfToken
         }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Adelanto eliminado correctamente.');
-            cargarAdelantos();
-            obtenerTotales();
-        } else {
-            alert('Error al eliminar el adelanto.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al eliminar el adelanto.');
-    });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Adelanto eliminado correctamente.');
+                    cargarAdelantos();
+                    obtenerTotales();
+                } else {
+                    alert('Error al eliminar el adelanto.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar el adelanto.');
+            });
 }
 
 
@@ -684,53 +684,53 @@ function guardarNuevoUsuario() {
         },
         body: JSON.stringify(usuario)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert('Usuario agregado correctamente.');
-            $('#nuevoUsuarioModal').modal('hide');
-            location.reload(); // Recargar la página para reflejar los cambios
-        } else {
-            alert('Error al agregar el usuario.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al agregar el usuario.');
-    });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Usuario agregado correctamente.');
+                    $('#nuevoUsuarioModal').modal('hide');
+                    location.reload(); // Recargar la página para reflejar los cambios
+                } else {
+                    alert('Error al agregar el usuario.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al agregar el usuario.');
+            });
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     cargarUsuariosEliminar();
 });
 
 function cargarUsuariosEliminar() {
     fetch('/usuarios/listar')
-        .then(response => response.json())
-        .then(data => {
-            if (data) {
-                var select = document.getElementById('usuarioEliminar');
-                select.innerHTML = '';
-                data.forEach(usuario => {
-                    var option = document.createElement('option');
-                    option.value = usuario.id;
-                    option.textContent = usuario.nombre;
-                    select.appendChild(option);
-                });
-            } else {
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    var select = document.getElementById('usuarioEliminar');
+                    select.innerHTML = '';
+                    data.forEach(usuario => {
+                        var option = document.createElement('option');
+                        option.value = usuario.id;
+                        option.textContent = usuario.nombre;
+                        select.appendChild(option);
+                    });
+                } else {
+                    alert('Error al cargar los usuarios.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
                 alert('Error al cargar los usuarios.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al cargar los usuarios.');
-        });
+            });
 }
 
 function eliminarUsuario() {
@@ -741,8 +741,23 @@ function eliminarUsuario() {
         return;
     }
 
+    // Mostrar el cuadro de confirmación antes de eliminar
+    var confirmarEliminacion = confirm("¿Está seguro que desea eliminar este usuario?");
+
+    if (!confirmarEliminacion) {
+        return; // Si el usuario cancela, no hacer nada
+    }
+
+    // Obtener el token CSRF de las meta tags
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
     fetch(`/usuarios/eliminar/${usuarioId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            [csrfHeader]: csrfToken // Incluir el token CSRF en los encabezados
+        }
     })
     .then(response => {
         if (!response.ok) {
@@ -767,5 +782,77 @@ function eliminarUsuario() {
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("usuarioForm");
+
+    if (form) {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();  // Evitar el comportamiento por defecto del formulario
+
+            // Obtener los valores del formulario
+            const nombre = document.getElementById("nombre").value;
+            // Obtener el token CSRF de las meta tags
+            const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+            const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
+            fetch("http://localhost:8080/usuarios/crear", {
+                method: "POST",
+                body: JSON.stringify({nombre: nombre}),
+                headers: {
+                    "Content-Type": "application/json",
+                    [csrfHeader]: csrfToken // Incluir el token CSRF en los encabezados
+                }
+            })
+            .then(response => {
+                if (!response.ok) {  // Verificar si la respuesta es exitosa (código de estado 2xx)
+                    return Promise.reject('Error en la solicitud');
+                }
+                return response.json();  // Convertir la respuesta a JSON si es exitosa
+            })
+            .then(data => {
+                const messageContainer = document.getElementById("message");
+
+                // Mostrar el cartel de mensaje fuera del modal
+                if (data.success) {
+                    messageContainer.innerHTML =
+                            `<div class="alert alert-success" role="alert">Usuario creado con éxito: ${data.usuario.nombre}</div>`;
+                    
+                    // Mostrar un mensaje de éxito en un alert
+                    alert(`Usuario creado con éxito: ${data.usuario.nombre}`);
+                } else {
+                    messageContainer.innerHTML =
+                            `<div class="alert alert-danger" role="alert">Error al crear usuario.</div>`;
+                }
+
+                // Hacer visible el mensaje
+                messageContainer.style.display = 'block';
+
+                // Cerrar el modal
+                $('#crearUsuarioModal').modal('hide');
+
+                // Refrescar la página
+                location.reload();  // Esto recargará la página actual
+            })
+            .catch(error => {
+                // Manejar errores de la solicitud o problemas con la respuesta
+                document.getElementById("message").innerHTML =
+                        `<div class="alert alert-danger" role="alert">Error en la solicitud: ${error}</div>`;
+            });
+        });
+    }
+});
 
 
+
+// Llamar a la función cuando se envíe el formulario
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("usuarioForm");
+    if (form) {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();  // Evitar el comportamiento por defecto del formulario
+
+            // Llamar a la función para crear el usuario
+            crearUsuario();
+        });
+    }
+});

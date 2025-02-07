@@ -26,12 +26,11 @@ public class UsuarioController {
 //        model.addAttribute("usuarios", usuarios);
 //        return "usuarios/listar-usuarios";
 //    }
-
     // Mostrar formulario para crear un nuevo usuario
     @GetMapping("/crear")
     public String mostrarFormularioCrear(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "usuarios/crear-usuario";
+        return "usuarios/crear-usuario";  // Aquí deberías tener tu vista para el formulario
     }
 
     // Crear un nuevo usuario
@@ -39,9 +38,17 @@ public class UsuarioController {
     @ResponseBody
     public Map<String, Object> crearUsuario(@RequestBody Usuario usuario) {
         Map<String, Object> response = new HashMap<>();
-        Usuario savedUsuario = usuarioService.saveUsuario(usuario);
-        response.put("success", true);
-        response.put("usuario", savedUsuario);
+        
+        try {
+            // Aquí creamos el usuario (ajusta este código según tu implementación)
+            Usuario savedUsuario = usuarioService.saveUsuario(usuario);
+            response.put("success", true);
+            response.put("usuario", savedUsuario);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Error al crear usuario.");
+        }
+        
         return response;
     }
 
@@ -63,8 +70,6 @@ public class UsuarioController {
         usuarioService.saveUsuario(usuario);
         return "redirect:/usuarios/listar";
     }
-
-   
 
     @GetMapping("/listar")
     @ResponseBody

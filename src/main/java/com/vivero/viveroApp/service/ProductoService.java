@@ -12,6 +12,10 @@ import java.util.Optional;
 @Service
 public class ProductoService {
 
+    public Producto saveProducto(Producto producto) {
+        return productoRepository.save(producto);
+    }
+
     @Autowired
     private ProductoRepository productoRepository;
 

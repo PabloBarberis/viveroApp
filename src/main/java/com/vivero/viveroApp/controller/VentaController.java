@@ -118,15 +118,17 @@ public String listarVentas(Model model, @PageableDefault(size = 10, sort = "fech
         model.addAttribute("metodosPago", MetodoPago.values());
         model.addAttribute("descuentos", Descuento.values());
         model.addAttribute("venta", venta);
+        System.out.println("ANTES DE CARGAR LA PAGINA EL ID DE LA VENTA ES: " + venta.getId());
         return "ventas/editar-venta";
     }
 
     // Actualizar venta
-    // Actualizar venta
-@PostMapping("/actualizar")
+    
+    @PostMapping("/actualizar")
 public String actualizarVenta(@ModelAttribute Venta venta, @RequestParam List<Long> productoIds, @RequestParam List<Integer> cantidades,
         @RequestParam Descuento descuento, @RequestParam MetodoPago metodoPago, @RequestParam(required = false) Long clienteId,
         @RequestParam String total, Model model) {
+        
     try {
         double totalDouble = Double.parseDouble(total.replace(",", "."));
         venta.setTotal(totalDouble);
@@ -134,7 +136,11 @@ public String actualizarVenta(@ModelAttribute Venta venta, @RequestParam List<Lo
         model.addAttribute("errorMessage", "El formato del total no es válido.");
         return "ventas/editar-venta";
     }
-    
+
+    // Asegurar que se edita una venta existente
+    Venta ventaExistente = ventaService.getVentaById(venta.getId())
+            .orElseThrow(() -> new EntityNotFoundException("Venta no encontrada con id: " + venta.getId()));
+
     venta.setFecha(new Date());
     venta.setDescuento(descuento);
     venta.setMetodoPago(metodoPago);
@@ -145,6 +151,7 @@ public String actualizarVenta(@ModelAttribute Venta venta, @RequestParam List<Lo
             venta.setCliente(cliente);
         }
     }
+
     venta.getProductos().clear();
     for (int i = 0; i < productoIds.size(); i++) {
         Producto producto = productoService.getProductoById(productoIds.get(i)).orElse(null);
@@ -152,6 +159,7 @@ public String actualizarVenta(@ModelAttribute Venta venta, @RequestParam List<Lo
             venta.agregarProducto(producto, cantidades.get(i));
         }
     }
+
     try {
         ventaService.updateVenta(venta);
     } catch (IllegalArgumentException e) {

@@ -3,20 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Incluir los tokens CSRF utilizando Thymeleaf -->
         <meta name="_csrf" th:content="${_csrf.token}">
         <meta name="_csrf_header" th:content="${_csrf.headerName}">
 
         <title>Gestión de Horas</title>
+
+        <!-- Incluir Bootstrap CSS desde CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <!-- Incluir el archivo de estilos personalizados -->
         <link rel="stylesheet" href="/css/styles.css">
+
         <!-- Incluir jQuery sin el atributo integrity -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!-- Incluir Popper.js y Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+
+        <!-- Incluir Popper.js desde jsDelivr -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+        <!-- Incluir Bootstrap JS desde CDN -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
         <!-- Incluir tu script personalizado -->
         <script src="/js/script.js"></script>
     </head>
+
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
             <a class="navbar-brand" href="/admin/dashboard">Vive Verde</a>
@@ -56,7 +67,9 @@
                 </ul>
             </div>
             <div class="nuevo-retroceder">
-                <button type="button" class="btn btn-nueva-venta" data-toggle="modal" data-target="#nuevoUsuarioModal">Nuevo Usuario</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearUsuarioModal">
+                    Crear Usuario
+                </button>
                 <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#eliminarUsuarioModal">Eliminar Usuario</button>
                 <a href="/" class="btn btn-retroceder ml-2">Retroceder</a>
             </div>
@@ -264,17 +277,6 @@
             </div>
         </div>
 
-        <style>
-
-        </style>
-
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="/js/script.js"></script>
-
-
         <!-- Modal para Editar Gasto -->
         <div class="modal fade" id="editarGastoModal" tabindex="-1" role="dialog" aria-labelledby="editarGastoModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -338,28 +340,33 @@
         </div>
 
         <!-- Modal para Nuevo Usuario -->
-        <div class="modal fade" id="nuevoUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="nuevoUsuarioModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="nuevoUsuarioModalLabel">Agregar Nuevo Usuario</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<div class="modal fade" id="crearUsuarioModal" tabindex="-1" aria-labelledby="crearUsuarioModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearUsuarioModalLabel">Crear Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario de creación de usuario -->
+                <form id="usuarioForm">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" required>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nombreUsuario">Nombre</label>
-                            <input type="text" id="nombreUsuario" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="guardarNuevoUsuario()">Guardar Usuario</button>
-                    </div>
-                </div>
+                    <!-- CSRF Token -->
+                    <input type="hidden" id="csrfToken" name="_csrf" value="${_csrf.token}">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <!-- Botón Cancelar -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </form>
+                <div id="message" class="mt-3"></div>
             </div>
         </div>
+    </div>
+</div>
+
+
 
 
         <!-- Modal para Eliminar Usuario -->

@@ -22,6 +22,9 @@ public class VentaService {
 
     @Autowired
     private VentaRepository ventaRepository;
+    
+    @Autowired
+    private ProductoService productoService;
 
     public Optional<Venta> getVentaById(Long id) {
         return ventaRepository.findById(id);
@@ -46,22 +49,68 @@ public class VentaService {
         return ventaRepository.save(venta);
     }
 
+    
     @Transactional
-    public Venta updateVenta(Venta venta) {
-        validarStock(venta);  // Validación de stock
+public Venta updateVenta(Venta venta) {
+    // Buscar la venta original en la base de datos
+    Venta ventaExistente = ventaRepository.findById(venta.getId())
+            .orElseThrow(() -> new EntityNotFoundException("Venta no encontrada con id: " + venta.getId()));
 
-        if (venta.getTotal() == null || venta.getTotal() == 0) {
-            venta.calcularTotal();
+    // Restaurar stock de los productos vendidos anteriormente
+    for (VentaProducto ventaProducto : ventaExistente.getProductos()) {
+        Producto producto = ventaProducto.getProducto();
+        producto.setStock(producto.getStock() + ventaProducto.getCantidad());
+        productoRepository.save(producto);
+    }
+
+    // Validar y actualizar la nueva cantidad de productos vendidos
+    for (VentaProducto ventaProducto : venta.getProductos()) {
+        Producto producto = productoRepository.findById(ventaProducto.getProducto().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado con id: " + ventaProducto.getProducto().getId()));
+
+        int nuevaCantidad = producto.getStock() - ventaProducto.getCantidad();
+        if (nuevaCantidad < 0) {
+            throw new IllegalArgumentException("Cantidad solicitada excede el stock disponible para el producto: " + producto.getNombre());
         }
-        return ventaRepository.save(venta);
+        producto.setStock(nuevaCantidad);
+        productoRepository.save(producto);
     }
 
-    @Transactional
-    public void deleteVenta(Long id) {
-        Venta venta = ventaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Venta no encontrada con id: " + id));
-        ventaRepository.delete(venta);
+    // Calcular total si no está definido
+    if (venta.getTotal() == null || venta.getTotal() == 0) {
+        venta.calcularTotal();
     }
+        System.out.println("EL ID ES: "+venta.getId());
+    // Guardar la venta actualizada
+    return ventaRepository.save(venta);
+}
+
+
+@Transactional
+public void deleteVenta(Long id) {
+    Venta venta = ventaRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Venta no encontrada con id: " + id));
+    
+    // Reponer el stock de los productos asociados a la venta
+    for (VentaProducto ventaProducto : venta.getProductos()) {
+        Producto producto = ventaProducto.getProducto();
+        
+        // Verificar si el producto es una instancia de Producto (o sus subclases)
+        if (producto instanceof Producto) {
+            // Aquí puedes agregar una lógica específica si deseas manejar alguna subclase en particular,
+            // pero en general todas las subclases de Producto deberían manejarse igual (reposicionar stock).
+            int cantidadRestante = producto.getStock() + ventaProducto.getCantidad();
+            producto.setStock(cantidadRestante);  // Reponer el stock
+            
+            // Guardar el producto actualizado
+            productoService.saveProducto(producto);
+        }
+    }
+
+    // Eliminar la venta
+    ventaRepository.delete(venta);
+}
+
 
     @Transactional(readOnly = true)
     public Page<Venta> getAllVentas(Pageable pageable) {
